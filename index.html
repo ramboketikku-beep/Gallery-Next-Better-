@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101820">
+  <title>Next Better Digital Library</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: #101820;
+      color: #f3efe6;
+      font-family: Arial, sans-serif;
+      line-height: 1.7;
+    }
+    header {
+      padding: 22px 18px;
+      border-bottom: 1px solid #35404a;
+      text-align: center;
+    }
+    .brand {
+      color: #d6c29a;
+      letter-spacing: 3px;
+      font-size: 13px;
+    }
+    h1 {
+      font-family: Georgia, serif;
+      font-size: clamp(32px, 8vw, 52px);
+      line-height: 1.15;
+      margin: 14px 0;
+    }
+    .intro {
+      color: #b9c0c7;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    main {
+      width: min(900px, 100%);
+      margin: auto;
+      padding: 34px 20px;
+    }
+    .hero {
+      padding: 30px 0;
+      text-align: center;
+    }
+    .tag {
+      color: #d6c29a;
+      font-size: 12px;
+      letter-spacing: 2px;
+    }
+    .search {
+      width: 100%;
+      padding: 14px;
+      margin: 24px 0;
+      border: 1px solid #46515d;
+      border-radius: 8px;
+      background: #1b2630;
+      color: white;
+      font-size: 16px;
+    }
+    .section-title {
+      font-family: Georgia, serif;
+      font-size: 25px;
+    }
+    .book {
+      padding: 22px;
+      border: 1px solid #35404a;
+      border-radius: 12px;
+      background: #17222c;
+    }
+    .cover {
+      min-height: 180px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      border-radius: 6px;
+      background: linear-gradient(145deg, #273c4b, #101820);
+      border: 1px solid #b9a67e;
+    }
+    .cover strong {
+      font: bold 27px Georgia, serif;
+      color: #e1d0a9;
+    }
+    .cover span {
+      font-size: 11px;
+      letter-spacing: 3px;
+      margin-top: 12px;
+    }
+    .label {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: #263c31;
+      color: #b6e1bf;
+      font-size: 12px;
+    }
+    .button {
+      display: inline-block;
+      padding: 11px 18px;
+      margin-top: 10px;
+      background: #d6c29a;
+      color: #101820;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    footer {
+      text-align: center;
+      color: #929da7;
+      padding: 25px 15px;
+      border-top: 1px solid #35404a;
+      font-size: 13px;
+    }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">NEXT BETTER</div>
+    <h1>Digital Library</h1>
+    <p class="intro">
+      Ruang untuk membaca, belajar, dan menjadi
+      versi diri yang lebih baik.
+    </p>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="tag">KNOWLEDGE · GROWTH · PROGRESS</div>
+      <h2>Mulai Perjalananmu</h2>
+      <p class="intro">
+        Temukan wawasan baru melalui koleksi bacaan
+        tentang pengembangan diri, pola pikir, dan kehidupan.
+      </p>
+    </section>
+
+    <input
+      class="search"
+      id="search"
+      type="search"
+      placeholder="Cari judul buku..."
+      aria-label="Cari judul buku"
+    >
+
+    <h2 class="section-title">Koleksi Pilihan</h2>
+
+    <section class="book" id="book">
+      <div class="cover">
+        <span>NEXT BETTER COLLECTION</span>
+        <strong>Mindset & Growth</strong>
+        <span>EDISI PERTAMA</span>
+      </div>
+      <p><span class="label">Contoh koleksi</span></p>
+      <h3>Bangun Pola Pikir Lebih Baik</h3>
+      <p>
+        Koleksi contoh untuk menampilkan buku-buku
+        pengembangan diri di perpustakaan digital.
+      </p>
+      <a class="button" href="#tentang">Jelajahi Perpustakaan</a>
+    </section>
+
+    <p id="empty" hidden>Buku tidak ditemukan.</p>
+
+    <section id="tentang">
+      <h2 class="section-title">Tentang Perpustakaan</h2>
+      <p>
+        Next Better Digital Library adalah ruang belajar
+        digital untuk membantu pembaca memperluas wawasan
+        dan terus berkembang.
+      </p>
+      <p>
+        Ke depannya, koleksi akan mencakup bacaan gratis
+        dan premium.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    NEXT BETTER · Read More. Become Better.
+  </footer>
+
+  <script>
+    const search = document.getElementById("search");
+    const book = document.getElementById("book");
+    const empty = document.getElementById("empty");
+
+    search.addEventListener("input", function () {
+      const match = book.textContent.toLowerCase()
+        .includes(search.value.trim().toLowerCase());
+      book.hidden = !match;
+      empty.hidden = match;
+    });
+  </script>
+</body>
+        </html>
+        
