@@ -2,199 +2,557 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#101820">
-  <title>Next Better Digital Library</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: #101820;
-      color: #f3efe6;
-      font-family: Arial, sans-serif;
-      line-height: 1.7;
-    }
-    header {
-      padding: 22px 18px;
-      border-bottom: 1px solid #35404a;
-      text-align: center;
-    }
-    .brand {
-      color: #d6c29a;
-      letter-spacing: 3px;
-      font-size: 13px;
-    }
-    h1 {
-      font-family: Georgia, serif;
-      font-size: clamp(32px, 8vw, 52px);
-      line-height: 1.15;
-      margin: 14px 0;
-    }
-    .intro {
-      color: #b9c0c7;
-      max-width: 520px;
-      margin: 0 auto;
-    }
-    main {
-      width: min(900px, 100%);
-      margin: auto;
-      padding: 34px 20px;
-    }
-    .hero {
-      padding: 30px 0;
-      text-align: center;
-    }
-    .tag {
-      color: #d6c29a;
-      font-size: 12px;
-      letter-spacing: 2px;
-    }
-    .search {
-      width: 100%;
-      padding: 14px;
-      margin: 24px 0;
-      border: 1px solid #46515d;
-      border-radius: 8px;
-      background: #1b2630;
-      color: white;
-      font-size: 16px;
-    }
-    .section-title {
-      font-family: Georgia, serif;
-      font-size: 25px;
-    }
-    .book {
-      padding: 22px;
-      border: 1px solid #35404a;
-      border-radius: 12px;
-      background: #17222c;
-    }
-    .cover {
-      min-height: 180px;
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      text-align: center;
-      border-radius: 6px;
-      background: linear-gradient(145deg, #273c4b, #101820);
-      border: 1px solid #b9a67e;
-    }
-    .cover strong {
-      font: bold 27px Georgia, serif;
-      color: #e1d0a9;
-    }
-    .cover span {
-      font-size: 11px;
-      letter-spacing: 3px;
-      margin-top: 12px;
-    }
-    .label {
-      display: inline-block;
-      padding: 4px 10px;
-      border-radius: 20px;
-      background: #263c31;
-      color: #b6e1bf;
-      font-size: 12px;
-    }
-    .button {
-      display: inline-block;
-      padding: 11px 18px;
-      margin-top: 10px;
-      background: #d6c29a;
-      color: #101820;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    footer {
-      text-align: center;
-      color: #929da7;
-      padding: 25px 15px;
-      border-top: 1px solid #35404a;
-      font-size: 13px;
-    }
-    [hidden] { display: none !important; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#101820">
+<title>Gallery Next Better</title>
+<style>
+:root {
+  --bg:#101820;
+  --panel:#192630;
+  --panel2:#202f3b;
+  --text:#f4f0e7;
+  --muted:#aab6bd;
+  --blue:#8cb8d9;
+  --gold:#d9bd83;
+  --border:#344651;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  line-height:1.6;
+}
+header {
+  padding:22px 18px;
+  border-bottom:1px solid var(--border);
+  background:#121d25;
+}
+.nav {
+  max-width:1100px;
+  margin:auto;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.brand {
+  font-family:Georgia,serif;
+  font-size:20px;
+  font-weight:bold;
+  letter-spacing:1px;
+}
+.brand span { color:var(--gold); }
+.nav small { color:var(--muted); }
+main { max-width:1100px; margin:auto; padding:28px 18px; }
+.hero {
+  padding:30px 0 24px;
+}
+.eyebrow {
+  color:var(--gold);
+  font-size:12px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+h1,h2,h3 { font-family:Georgia,serif; line-height:1.25; }
+h1 { font-size:clamp(32px,6vw,54px); margin:10px 0; }
+.hero p { max-width:580px; color:var(--muted); }
+.search {
+  display:flex;
+  gap:10px;
+  margin:22px 0;
+}
+input,select,button {
+  font:inherit;
+  border-radius:9px;
+  padding:12px;
+}
+input,select {
+  min-width:0;
+  background:var(--panel);
+  color:var(--text);
+  border:1px solid var(--border);
+}
+.search input { flex:1; }
+button {
+  border:0;
+  cursor:pointer;
+  background:var(--gold);
+  color:#17212a;
+  font-weight:bold;
+}
+button:hover { opacity:.9; }
+.filters {
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  margin:18px 0 26px;
+}
+.filter {
+  background:var(--panel);
+  border:1px solid var(--border);
+  color:var(--text);
+  padding:9px 13px;
+}
+.filter.active {
+  background:var(--gold);
+  color:#17212a;
+}
+.section-title {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin:28px 0 16px;
+}
+.section-title h2 { margin:0; font-size:25px; }
+.section-title span { color:var(--muted); font-size:13px; }
+.grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+}
+.book {
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--panel);
+}
+.cover {
+  min-height:185px;
+  padding:18px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:linear-gradient(145deg,#253c4b,#101820);
+  border-bottom:1px solid var(--border);
+}
+.cover .cover-brand {
+  font-size:10px;
+  letter-spacing:2px;
+  color:var(--gold);
+}
+.cover h3 {
+  font-size:23px;
+  margin:20px 0 8px;
+}
+.cover p { margin:0; font-size:12px; color:#c5d0d6; }
+.book-info { padding:15px; }
+.meta {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:8px;
+  font-size:12px;
+  color:var(--muted);
+}
+.badge {
+  border-radius:5px;
+  padding:4px 7px;
+  font-weight:bold;
+}
+.free { color:#a9d8b2; background:#203d30; }
+.premium { color:var(--gold); background:#403624; }
+.book-info h3 { margin:12px 0 6px; font-size:19px; }
+.book-info p { color:var(--muted); font-size:13px; min-height:42px; }
+.book-info button { width:100%; margin-top:8px; }
+.empty {
+  grid-column:1/-1;
+  color:var(--muted);
+  padding:28px;
+  border:1px dashed var(--border);
+  border-radius:10px;
+  text-align:center;
+}
+.reader {
+  position:fixed;
+  inset:0;
+  z-index:10;
+  background:#f5f0e6;
+  color:#222;
+  overflow:auto;
+  display:none;
+}
+.reader.open { display:block; }
+.reader-bar {
+  position:sticky;
+  top:0;
+  padding:12px 16px;
+  background:#e8e0d1;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  border-bottom:1px solid #d2c7b5;
+}
+.reader-bar button { padding:8px 12px; }
+.reader-content {
+  max-width:760px;
+  margin:auto;
+  padding:28px 22px 70px;
+  font-size:18px;
+  line-height:1.9;
+}
+.reader-content h1,.reader-content h2 { color:#253847; }
+.reader-content h1 { font-size:35px; }
+.reader-content p { margin:0 0 1.4em; }
+.reader-tools { display:flex; gap:6px; }
+.reader-tools button { background:#d7c9b1; }
+footer {
+  margin-top:50px;
+  border-top:1px solid var(--border);
+  padding:25px 18px;
+  text-align:center;
+  color:var(--muted);
+  font-size:12px;
+}
+@media(max-width:750px) {
+  .grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:11px; }
+  .cover { min-height:160px; padding:13px; }
+  .cover h3 { font-size:19px; }
+  .book-info { padding:12px; }
+}
+@media(max-width:430px) {
+  .grid { grid-template-columns:1fr; }
+  .cover { min-height:180px; }
+  .search { flex-direction:column; }
+  .search button { width:100%; }
+}
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand">NEXT BETTER</div>
-    <h1>Digital Library</h1>
-    <p class="intro">
-      Ruang untuk membaca, belajar, dan menjadi
-      versi diri yang lebih baik.
+<header>
+  <div class="nav">
+    <div class="brand">GALLERY <span>NEXT BETTER</span></div>
+    <small>Digital Library</small>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="eyebrow">Read · Learn · Grow</div>
+    <h1>Temukan wawasan.<br>Bangun diri lebih baik.</h1>
+    <p>
+      Perpustakaan digital untuk menjelajahi ide, pola pikir,
+      psikologi, bisnis, dan kehidupan.
     </p>
-  </header>
+  </section>
 
-  <main>
-    <section class="hero">
-      <div class="tag">KNOWLEDGE · GROWTH · PROGRESS</div>
-      <h2>Mulai Perjalananmu</h2>
-      <p class="intro">
-        Temukan wawasan baru melalui koleksi bacaan
-        tentang pengembangan diri, pola pikir, dan kehidupan.
-      </p>
-    </section>
+  <div class="search">
+    <input id="search" type="search"
+      placeholder="Cari judul atau topik buku..."
+      aria-label="Cari buku">
+    <button id="searchBtn">Cari Buku</button>
+  </div>
 
-    <input
-      class="search"
-      id="search"
-      type="search"
-      placeholder="Cari judul buku..."
-      aria-label="Cari judul buku"
-    >
+  <div class="filters" id="filters"></div>
 
-    <h2 class="section-title">Koleksi Pilihan</h2>
+  <div class="section-title">
+    <h2>Koleksi E-book</h2>
+    <span id="count">0 buku</span>
+  </div>
 
-    <section class="book" id="book">
-      <div class="cover">
-        <span>NEXT BETTER COLLECTION</span>
-        <strong>Mindset & Growth</strong>
-        <span>EDISI PERTAMA</span>
-      </div>
-      <p><span class="label">Contoh koleksi</span></p>
-      <h3>Bangun Pola Pikir Lebih Baik</h3>
-      <p>
-        Koleksi contoh untuk menampilkan buku-buku
-        pengembangan diri di perpustakaan digital.
-      </p>
-      <a class="button" href="#tentang">Jelajahi Perpustakaan</a>
-    </section>
+  <section class="grid" id="catalog"></section>
+</main>
 
-    <p id="empty" hidden>Buku tidak ditemukan.</p>
+<footer>
+  GALLERY NEXT BETTER · Ruang untuk belajar dan berkembang
+</footer>
 
-    <section id="tentang">
-      <h2 class="section-title">Tentang Perpustakaan</h2>
-      <p>
-        Next Better Digital Library adalah ruang belajar
-        digital untuk membantu pembaca memperluas wawasan
-        dan terus berkembang.
-      </p>
-      <p>
-        Ke depannya, koleksi akan mencakup bacaan gratis
-        dan premium.
-      </p>
-    </section>
-  </main>
+<section class="reader" id="reader" aria-label="Pembaca e-book">
+  <div class="reader-bar">
+    <button id="closeReader">← Kembali</button>
+    <div class="reader-tools">
+      <button id="smaller" aria-label="Perkecil teks">A−</button>
+      <button id="larger" aria-label="Perbesar teks">A+</button>
+      <button id="changeTheme">Warna</button>
+    </div>
+  </div>
+  <article class="reader-content" id="readerContent"></article>
+</section>
 
-  <footer>
-    NEXT BETTER · Read More. Become Better.
-  </footer>
+<script>
+const categories = [
+  "Semua",
+  "Mindset",
+  "Pengembangan Diri",
+  "Psikologi",
+  "Bisnis",
+  "Keuangan",
+  "Filsafat"
+];
 
-  <script>
-    const search = document.getElementById("search");
-    const book = document.getElementById("book");
-    const empty = document.getElementById("empty");
+// Contoh buku untuk menguji tampilan.
+// Ganti atau tambahkan data setelah katalog berfungsi.
+const books = [
+  {
+    id: 1,
+    title: "Membangun Pola Pikir Bertumbuh",
+    category: "Mindset",
+    access: "free",
+    price: 0,
+    description: "Belajar memahami pola pikir dan membangun kebiasaan positif.",
+    content: `
+      <h1>Membangun Pola Pikir Bertumbuh</h1>
+      <p><em>Contoh e-book Gallery Next Better</em></p>
+      <h2>Pendahuluan</h2>
+      <p>Pertumbuhan dimulai ketika kita bersedia belajar dari pengalaman,
+      menerima masukan, dan mencoba pendekatan yang lebih baik.</p>
+      <h2>1. Belajar dari proses</h2>
+      <p>Kemampuan tidak selalu hadir sejak awal. Latihan yang konsisten,
+      evaluasi, dan kesediaan memperbaiki kesalahan membantu kita berkembang.</p>
+      <h2>Rangkuman</h2>
+      <p>Tetapkan tujuan yang realistis, lakukan langkah kecil, dan tinjau
+      perkembanganmu secara berkala.</p>
+      <p><strong>Catatan:</strong> Ini hanya contoh isi, bukan buku lengkap.</p>
+    `
+  },
+  {
+    id: 2,
+    title: "Memahami Perilaku Manusia",
+    category: "Psikologi",
+    access: "free",
+    price: 0,
+    description: "Pengantar untuk memahami kebiasaan dan perilaku manusia.",
+    content: `
+      <h1>Memahami Perilaku Manusia</h1>
+      <h2>Pendahuluan</h2>
+      <p>Perilaku manusia dipengaruhi oleh banyak hal, termasuk pengalaman,
+      lingkungan, kebiasaan, dan situasi yang dihadapi.</p>
+      <h2>Mengamati tanpa terburu-buru</h2>
+      <p>Amati konteks sebelum mengambil kesimpulan. Satu tindakan tidak
+      selalu cukup untuk menjelaskan keseluruhan kepribadian seseorang.</p>
+    `
+  },
+  {
+    id: 3,
+    title: "Dasar Strategi Bisnis",
+    category: "Bisnis",
+    access: "premium",
+    price: 25000,
+    description: "Contoh buku premium untuk menguji tampilan harga dan akses.",
+    content: `
+      <h1>Dasar Strategi Bisnis</h1>
+      <p>Contoh konten demonstrasi. Ganti dengan isi buku milikmu yang
+      lengkap dan sah untuk diterbitkan.</p>
+    `
+  },
+  {
+    id: 4,
+    title: "Mengelola Uang dengan Bijak",
+    category: "Keuangan",
+    access: "premium",
+    price: 30000,
+    description: "Contoh e-book keuangan dengan akses premium.",
+    content: `
+      <h1>Mengelola Uang dengan Bijak</h1>
+      <p>Ini hanya contoh untuk menguji kartu buku. Konten premium belum
+      dilindungi oleh server pada prototipe ini.</p>
+    `
+  },
+  {
+    id: 5,
+    title: "Kebiasaan Kecil, Perubahan Besar",
+    category: "Pengembangan Diri",
+    access: "free",
+    price: 0,
+    description: "Membangun rutinitas dan menjaga konsistensi.",
+    content: `
+      <h1>Kebiasaan Kecil, Perubahan Besar</h1>
+      <p>Perubahan sering kali menjadi lebih mudah ketika dimulai dari
+      tindakan kecil yang dapat diulang setiap hari.</p>
+    `
+  },
+  {
+    id: 6,
+    title: "Pertanyaan tentang Kehidupan",
+    category: "Filsafat",
+    access: "free",
+    price: 0,
+    description: "Renungan awal mengenai nilai, tujuan, dan pilihan hidup.",
+    content: `
+      <h1>Pertanyaan tentang Kehidupan</h1>
+      <p>Filsafat mengajak kita memeriksa asumsi, mengajukan pertanyaan,
+      dan menimbang alasan di balik pilihan hidup.</p>
+    `
+  }
+];
 
-    search.addEventListener("input", function () {
-      const match = book.textContent.toLowerCase()
-        .includes(search.value.trim().toLowerCase());
-      book.hidden = !match;
-      empty.hidden = match;
+let activeCategory = "Semua";
+let fontSize = 18;
+let warmTheme = true;
+
+const catalog = document.getElementById("catalog");
+const filters = document.getElementById("filters");
+const search = document.getElementById("search");
+const count = document.getElementById("count");
+
+function rupiah(value) {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    maximumFractionDigits: 0
+  }).format(value);
+}
+
+function renderFilters() {
+  filters.innerHTML = "";
+  categories.forEach(category => {
+    const button = document.createElement("button");
+    button.className = "filter" +
+      (category === activeCategory ? " active" : "");
+    button.textContent = category;
+    button.addEventListener("click", () => {
+      activeCategory = category;
+      renderFilters();
+      renderBooks();
     });
-  </script>
+    filters.appendChild(button);
+  });
+}
+
+function renderBooks() {
+  const query = search.value.trim().toLowerCase();
+  const filtered = books.filter(book => {
+    const categoryMatch =
+      activeCategory === "Semua" ||
+      book.category === activeCategory;
+    const searchMatch =
+      (book.title + " " + book.description + " " + book.category)
+      .toLowerCase().includes(query);
+    return categoryMatch && searchMatch;
+  });
+
+  catalog.innerHTML = "";
+  count.textContent = filtered.length + " buku";
+
+  if (!filtered.length) {
+    catalog.innerHTML =
+      '<div class="empty">Buku tidak ditemukan. Coba kata kunci lain.</div>';
+    return;
+  }
+
+  filtered.forEach(book => {
+    const card = document.createElement("article");
+    card.className = "book";
+
+    const cover = document.createElement("div");
+    cover.className = "cover";
+
+    const brand = document.createElement("div");
+    brand.className = "cover-brand";
+    brand.textContent = "NEXT BETTER · E-BOOK";
+
+    const title = document.createElement("h3");
+    title.textContent = book.title;
+
+    const category = document.createElement("p");
+    category.textContent = book.category;
+
+    cover.append(brand, title, category);
+
+    const info = document.createElement("div");
+    info.className = "book-info";
+
+    const meta = document.createElement("div");
+    meta.className = "meta";
+
+    const badge = document.createElement("span");
+    badge.className = "badge " +
+      (book.access === "free" ? "free" : "premium");
+    badge.textContent =
+      book.access === "free" ? "GRATIS" : "PREMIUM";
+
+    const price = document.createElement("span");
+    price.textContent = book.access === "free"
+      ? "Rp0" : rupiah(book.price);
+
+    meta.append(badge, price);
+
+    const heading = document.createElement("h3");
+    heading.textContent = book.title;
+
+    const description = document.createElement("p");
+    description.textContent = book.description;
+
+    const button = document.createElement("button");
+    button.textContent = book.access === "free"
+      ? "Baca E-book" : "Lihat Akses Premium";
+
+    button.addEventListener("click", () => {
+      if (book.access === "premium") {
+        alert(
+          "Buku ini ditandai premium sebagai contoh tampilan. " +
+          "Pembayaran dan pemeriksaan akses belum diaktifkan."
+        );
+        return;
+      }
+      openReader(book);
+    });
+
+    info.append(meta, heading, description, button);
+    card.append(cover, info);
+    catalog.appendChild(card);
+  });
+}
+
+function openReader(book) {
+  document.getElementById("readerContent").innerHTML = book.content;
+  document.getElementById("reader").classList.add("open");
+  document.body.style.overflow = "hidden";
+  document.getElementById("reader").scrollTop = 0;
+  applyReaderSettings();
+}
+
+function closeReader() {
+  document.getElementById("reader").classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+function applyReaderSettings() {
+  const content = document.getElementById("readerContent");
+  content.style.fontSize = fontSize + "px";
+
+  const reader = document.getElementById("reader");
+  const bar = document.querySelector(".reader-bar");
+
+  if (warmTheme) {
+    reader.style.background = "#f5f0e6";
+    reader.style.color = "#222222";
+    bar.style.background = "#e8e0d1";
+  } else {
+    reader.style.background = "#101820";
+    reader.style.color = "#e9edf0";
+    bar.style.background = "#192630";
+  }
+}
+
+document.getElementById("closeReader")
+  .addEventListener("click", closeReader);
+
+document.getElementById("larger").addEventListener("click", () => {
+  fontSize = Math.min(30, fontSize + 2);
+  applyReaderSettings();
+});
+
+document.getElementById("smaller").addEventListener("click", () => {
+  fontSize = Math.max(14, fontSize - 2);
+  applyReaderSettings();
+});
+
+document.getElementById("changeTheme").addEventListener("click", () => {
+  warmTheme = !warmTheme;
+  applyReaderSettings();
+});
+
+search.addEventListener("input", renderBooks);
+document.getElementById("searchBtn")
+  .addEventListener("click", renderBooks);
+
+renderFilters();
+renderBooks();
+</script>
 </body>
-  </html>
-  
+</html>
