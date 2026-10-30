@@ -1,620 +1,197 @@
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080d20">
-  <title>GALLERY NEXT BETTER</title>
-  <meta name="description" content="Temukan dan baca koleksi buku digital di GALLERY NEXT BETTER.">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+/* ===== MODERN FUTURISTIC COLOR THEME ===== */
 
-  <style>
-    :root {
-      --bg: #080d20;
-      --panel: rgba(19, 28, 57, .76);
-      --panel2: #111b38;
-      --text: #f4f6ff;
-      --muted: #9ba8c8;
-      --purple: #9b72ff;
-      --blue: #4c9dff;
-      --line: rgba(151, 169, 255, .16);
-    }
+:root {
+  --bg: #080b1a;
+  --panel: #11162d;
+  --panel2: #1b2040;
+  --text: #f3f2ff;
+  --muted: #aaaed0;
+  --gold: #a78bfa;
+  --gold2: #6366f1;
+  --line: #30365e;
+  --green: #65e6c4;
+  --blueblack: #151b3b;
+}
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--text);
-      background:
-        radial-gradient(ellipse at 15% 5%, rgba(93, 57, 190, .24), transparent 34%),
-        radial-gradient(ellipse at 90% 25%, rgba(25, 112, 219, .17), transparent 32%),
-        var(--bg);
-      font-family: "DM Sans", sans-serif;
-      min-height: 100vh;
-    }
-    button, input, select, textarea { font: inherit; }
-    button { cursor: pointer; }
-    .container { width: min(1160px, 92%); margin: auto; }
+body {
+  background:
+    radial-gradient(ellipse at 50% -15%, #343080 0%, #151735 42%, #080b1a 80%);
+  color: var(--text);
+}
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      border-bottom: 1px solid var(--line);
-      background: rgba(8, 13, 32, .82);
-      backdrop-filter: blur(18px);
-    }
-    .nav {
-      min-height: 76px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-    }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      color: white;
-      text-decoration: none;
-      font-family: "Space Grotesk", sans-serif;
-      font-weight: 700;
-      letter-spacing: .5px;
-    }
-    .brand-mark {
-      width: 40px;
-      height: 40px;
-      display: grid;
-      place-items: center;
-      border-radius: 13px;
-      background: linear-gradient(135deg, var(--purple), var(--blue));
-      box-shadow: 0 0 24px rgba(126, 103, 255, .35);
-      font-size: 20px;
-    }
-    .brand small {
-      display: block;
-      color: #aab7db;
-      font: 600 9px "DM Sans", sans-serif;
-      letter-spacing: 2.4px;
-      margin-top: 3px;
-    }
-    .nav-actions { display: flex; gap: 9px; align-items: center; }
+header {
+  background: rgba(9, 12, 31, .94);
+  border-bottom: 1px solid #454080;
+}
 
-    .btn {
-      border: 1px solid var(--line);
-      color: white;
-      background: rgba(255,255,255,.06);
-      border-radius: 12px;
-      padding: 11px 16px;
-      font-weight: 700;
-      transition: .2s;
-    }
-    .btn:hover { transform: translateY(-2px); border-color: var(--purple); }
-    .btn-primary {
-      border: 0;
-      background: linear-gradient(110deg, #8057ed, #398fe9);
-      box-shadow: 0 8px 25px rgba(90, 93, 230, .25);
-    }
-    .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+.brand-icon,
+.brand span,
+.eyebrow,
+.section-title span,
+.cover .cover-brand,
+.cover .cover-bottom {
+  color: #a78bfa;
+}
 
-    .hero {
-      position: relative;
-      overflow: hidden;
-      padding: 78px 0 65px;
-    }
-    .hero::after {
-      content: "";
-      position: absolute;
-      width: 360px;
-      height: 360px;
-      right: -100px;
-      top: 5px;
-      border-radius: 50%;
-      background: rgba(105, 74, 255, .15);
-      filter: blur(75px);
-      pointer-events: none;
-    }
-    .hero-content { max-width: 730px; position: relative; z-index: 1; }
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      color: #c5b4ff;
-      background: rgba(139, 103, 255, .12);
-      border: 1px solid rgba(166, 137, 255, .24);
-      border-radius: 30px;
-      padding: 8px 13px;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-    h1 {
-      font: 700 clamp(38px, 7vw, 67px)/1.08 "Space Grotesk", sans-serif;
-      letter-spacing: -2.5px;
-      margin: 22px 0 17px;
-    }
-    h1 span {
-      background: linear-gradient(100deg, #c6a9ff, #65baff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .hero p { color: var(--muted); line-height: 1.8; max-width: 590px; }
-    .hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+.icon-btn:hover {
+  border-color: #8b5cf6;
+  color: #a78bfa;
+}
 
-    .section { padding: 27px 0 45px; }
-    .section-heading {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 22px;
-    }
-    .section-heading h2 {
-      font: 700 27px "Space Grotesk", sans-serif;
-      margin: 0 0 6px;
-    }
-    .section-heading p { margin: 0; color: var(--muted); font-size: 13px; }
-    .toolbar { display: flex; gap: 10px; margin-bottom: 19px; }
-    .field {
-      width: 100%;
-      color: white;
-      background: rgba(18, 27, 55, .9);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      outline: none;
-      padding: 13px 14px;
-    }
-    .field:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(155,114,255,.12); }
-    .field::placeholder { color: #7886a8; }
-    select.field { min-width: 155px; }
-    select option { background: #111b38; }
+.nav-links a:hover {
+  color: #a78bfa;
+}
 
-    .categories { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 23px; }
-    .category {
-      border: 1px solid var(--line);
-      border-radius: 30px;
-      color: #b8c3e0;
-      background: rgba(255,255,255,.035);
-      padding: 8px 15px;
-      font-size: 12px;
-      font-weight: 700;
-    }
-    .category.active {
-      color: white;
-      border-color: transparent;
-      background: linear-gradient(100deg, #8057ed, #398fe9);
-    }
+.hero {
+  border-color: #6252b5;
+  background:
+    linear-gradient(90deg, rgba(9, 12, 31, .97) 0%, rgba(20, 19, 55, .88) 48%, rgba(35, 25, 83, .25) 100%),
+    radial-gradient(ellipse at 82% 60%, #6651d9 0, transparent 35%),
+    linear-gradient(135deg, #24245b, #090b1d 75%);
+}
 
-    .book-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 19px;
-    }
-    .book-card {
-      min-width: 0;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      border-radius: 17px;
-      background: linear-gradient(150deg, rgba(25, 36, 72, .94), rgba(13, 21, 44, .96));
-      transition: .25s;
-    }
-    .book-card:hover {
-      transform: translateY(-5px);
-      border-color: rgba(157, 126, 255, .55);
-      box-shadow: 0 14px 35px rgba(0,0,0,.22);
-    }
-    .cover {
-      height: 205px;
-      background: linear-gradient(135deg, #34266a, #164d79);
-      display: grid;
-      place-items: center;
-      overflow: hidden;
-    }
-    .cover img { width: 100%; height: 100%; object-fit: cover; }
-    .cover-placeholder { font-size: 42px; opacity: .8; }
-    .book-info { padding: 15px; }
-    .book-tag {
-      display: inline-block;
-      color: #c9b9ff;
-      background: rgba(147, 111, 255, .13);
-      border-radius: 20px;
-      padding: 5px 9px;
-      font-size: 10px;
-      font-weight: 800;
-      margin-bottom: 9px;
-    }
-    .book-info h3 {
-      font: 700 16px "Space Grotesk", sans-serif;
-      margin: 0 0 7px;
-      overflow-wrap: anywhere;
-    }
-    .book-info p {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.6;
-      min-height: 39px;
-      margin: 0 0 12px;
-    }
-    .book-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
-    .price { font-size: 12px; font-weight: 800; color: #9dc8ff; }
-    .read-btn { padding: 9px 12px; font-size: 11px; }
+.hero:after {
+  background:
+    repeating-linear-gradient(90deg, transparent 0 34px, rgba(167, 139, 250, .12) 35px 38px),
+    linear-gradient(0deg, rgba(8, 8, 25, .8), transparent 70%);
+  border-left-color: rgba(167, 139, 250, .3);
+}
 
-    .empty, .loading {
-      color: var(--muted);
-      text-align: center;
-      padding: 45px 15px;
-      border: 1px dashed var(--line);
-      border-radius: 16px;
-      grid-column: 1 / -1;
-    }
-    .admin-panel {
-      display: none;
-      margin: 25px auto 45px;
-      padding: 23px;
-      border: 1px solid rgba(155,114,255,.35);
-      border-radius: 18px;
-      background: var(--panel);
-      box-shadow: 0 15px 50px rgba(0,0,0,.16);
-    }
-    .admin-panel.show { display: block; }
-    .admin-panel h2 { font: 700 23px "Space Grotesk"; margin: 0 0 7px; }
-    .admin-panel > p { color: var(--muted); font-size: 13px; line-height: 1.6; }
-    .admin-form {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 13px;
-      margin-top: 18px;
-    }
-    .form-group { display: flex; flex-direction: column; gap: 7px; }
-    .form-group label { color: #c2cce5; font-size: 12px; font-weight: 700; }
-    .full { grid-column: 1 / -1; }
-    textarea.field { min-height: 90px; resize: vertical; }
-    input[type="file"].field { font-size: 12px; }
-    .check-row { display: flex; align-items: center; gap: 9px; color: #c2cce5; font-size: 13px; }
-    .admin-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+.hero p {
+  color: #c7c9e8;
+}
 
-    footer {
-      border-top: 1px solid var(--line);
-      padding: 27px 0;
-      color: var(--muted);
-      font-size: 12px;
-      text-align: center;
-    }
+.search input {
+  background: #171d3d;
+  color: #f3f2ff;
+  border-color: #8065e9;
+}
 
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 50;
-      background: rgba(2,5,16,.82);
-      backdrop-filter: blur(9px);
-      padding: 18px;
-      overflow-y: auto;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal.show { display: flex; }
-    .modal-box {
-      width: min(470px, 100%);
-      padding: 25px;
-      border: 1px solid var(--line);
-      border-radius: 19px;
-      background: #111a35;
-      box-shadow: 0 25px 80px rgba(0,0,0,.45);
-    }
-    .modal-box h2 { font: 700 23px "Space Grotesk"; margin: 0 0 8px; }
-    .modal-box > p { color: var(--muted); font-size: 13px; line-height: 1.6; }
-    .modal-form { display: grid; gap: 12px; margin-top: 18px; }
-    .modal-close { float: right; border: 0; color: #aeb8d3; background: none; font-size: 23px; }
-    .notice { color: #aebbe0; font-size: 12px; line-height: 1.6; }
-    #readerModal { padding: 0; }
-    .reader-shell {
-      width: 100%;
-      height: 100%;
-      min-height: 100vh;
-      background: white;
-      display: flex;
-      flex-direction: column;
-    }
-    .reader-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 16px;
-      color: white;
-      background: #101a35;
-    }
-    .reader-top button { color: white; border: 0; background: transparent; font-size: 24px; }
-    #readerFrame { width: 100%; flex: 1; min-height: 85vh; border: 0; background: white; }
+.search input::placeholder {
+  color: #a4a8cb;
+}
 
-    #toast {
-      position: fixed;
-      z-index: 100;
-      bottom: 22px;
-      left: 50%;
-      transform: translate(-50%, 20px);
-      opacity: 0;
-      pointer-events: none;
-      max-width: 90%;
-      padding: 12px 17px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      color: white;
-      background: #202d50;
-      box-shadow: 0 10px 35px rgba(0,0,0,.3);
-      font-size: 13px;
-      transition: .25s;
-    }
-    #toast.show { opacity: 1; transform: translate(-50%, 0); }
+.search button,
+.gold-btn {
+  background: linear-gradient(135deg, #9b7aff, #5146c9);
+  color: white;
+  border-color: #a78bfa;
+}
 
-    @media (max-width: 900px) {
-      .book-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    }
-    @media (max-width: 650px) {
-      .nav { min-height: 68px; }
-      .brand { font-size: 13px; }
-      .brand-mark { width: 35px; height: 35px; }
-      .nav-actions .btn { padding: 9px 10px; font-size: 11px; }
-      .hero { padding: 58px 0 45px; }
-      .book-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
-      .cover { height: 165px; }
-      .book-info { padding: 12px; }
-      .book-info h3 { font-size: 14px; }
-      .book-info p { font-size: 11px; }
-      .toolbar { flex-direction: column; }
-      .admin-form { grid-template-columns: 1fr; }
-      .full { grid-column: auto; }
-      .section-heading h2 { font-size: 23px; }
-    }
-    @media (max-width: 360px) {
-      .book-grid { grid-template-columns: 1fr 1fr; }
-      .cover { height: 140px; }
-      .brand small { letter-spacing: 1.5px; }
-    }
-  </style>
-</head>
+.filter.active,
+.filter:hover {
+  background: linear-gradient(145deg, #393078, #1b1c43);
+  border-color: #8b5cf6;
+  color: #e2d8ff;
+}
 
-<body>
-<header>
-  <div class="container nav">
-    <a class="brand" href="#">
-      <span class="brand-mark">✦</span>
-      <span>GALLERY NEXT BETTER<small>DIGITAL BOOK COLLECTION</small></span>
-    </a>
-    <div class="nav-actions">
-      <button class="btn" id="accountBtn">Masuk</button>
-      <button class="btn btn-primary" id="adminBtn">Admin</button>
-    </div>
-  </div>
-</header>
+.book {
+  background: linear-gradient(180deg, #1a2042, #10152e);
+  border-color: #303967;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, .3);
+}
 
-<main>
-  <section class="hero">
-    <div class="container hero-content">
-      <span class="eyebrow">✦ YOUR DIGITAL READING SPACE</span>
-      <h1>Explore Ideas.<br><span>Read Beyond Limits.</span></h1>
-      <p>
-        Temukan wawasan, cerita, dan inspirasi dalam satu ruang koleksi
-        buku digital. Pilih buku favoritmu dan mulai membaca.
-      </p>
-      <div class="hero-buttons">
-        <button class="btn btn-primary" onclick="document.getElementById('koleksi').scrollIntoView({behavior:'smooth'})">
-          Jelajahi Koleksi ↗
-        </button>
-        <button class="btn" id="heroAccountBtn">Buat Akun</button>
-      </div>
-    </div>
-  </section>
+.book:hover {
+  border-color: #8b5cf6;
+  box-shadow: 0 8px 28px rgba(100, 75, 230, .2);
+}
 
-  <section class="section container" id="koleksi">
-    <div class="section-heading">
-      <div>
-        <h2>Explore Collection</h2>
-        <p>Koleksi buku digital GALLERY NEXT BETTER</p>
-      </div>
-    </div>
+.cover {
+  border-bottom-color: #454080;
+  background:
+    radial-gradient(ellipse at 50% 70%, rgba(130, 100, 255, .4), transparent 45%),
+    linear-gradient(145deg, #27366b, #10152e 72%);
+}
 
-    <div class="toolbar">
-      <input class="field" id="searchInput" type="search" placeholder="Cari judul atau deskripsi buku...">
-      <select class="field" id="sortSelect" aria-label="Urutkan buku">
-        <option value="new">Terbaru</option>
-        <option value="az">Judul A–Z</option>
-        <option value="price">Harga terendah</option>
-      </select>
-    </div>
+.cover:before {
+  border-color: rgba(167, 139, 250, .55);
+}
 
-    <div class="categories" id="categories">
-      <button class="category active" data-category="Semua">Semua</button>
-    </div>
+.cover[data-cat="Pengembangan Diri"] {
+  background: radial-gradient(ellipse at 70% 70%, #7562c9, transparent 40%),
+    linear-gradient(145deg, #46417d, #171831);
+  color: white;
+}
 
-    <div class="book-grid" id="bookGrid">
-      <div class="loading">Memuat koleksi buku...</div>
-    </div>
-  </section>
+.cover[data-cat="Psikologi"] {
+  background: radial-gradient(circle at 50% 70%, #346cbb, transparent 35%),
+    linear-gradient(145deg, #142b55, #080e20);
+}
 
-  <section class="container admin-panel" id="adminPanel">
-    <h2>Admin Dashboard</h2>
-    <p>Tambahkan buku milikmu. Unggah sampul dan naskah dalam format HTML. Buku dapat disimpan sebagai draf atau langsung diterbitkan.</p>
+.cover[data-cat="Bisnis"] {
+  background: radial-gradient(ellipse at 60% 70%, #6556d9, transparent 35%),
+    linear-gradient(145deg, #263d6b, #10152e);
+}
 
-    <form id="bookForm" class="admin-form">
-      <div class="form-group">
-        <label for="bookTitle">Judul buku *</label>
-        <input class="field" id="bookTitle" required maxlength="150" placeholder="Masukkan judul buku">
-      </div>
-      <div class="form-group">
-        <label for="bookCategory">Kategori *</label>
-        <input class="field" id="bookCategory" required maxlength="60" placeholder="Contoh: Pendidikan">
-      </div>
-      <div class="form-group full">
-        <label for="bookDescription">Deskripsi buku</label>
-        <textarea class="field" id="bookDescription" placeholder="Ceritakan isi buku..."></textarea>
-      </div>
-      <div class="form-group">
-        <label for="bookPrice">Harga (Rupiah)</label>
-        <input class="field" id="bookPrice" type="number" min="0" value="0">
-      </div>
-      <div class="form-group">
-        <label for="bookCover">Sampul buku (JPG, PNG, WEBP)</label>
-        <input class="field" id="bookCover" type="file" accept="image/jpeg,image/png,image/webp">
-      </div>
-      <div class="form-group full">
-        <label for="bookFile">Naskah buku (file HTML) *</label>
-        <input class="field" id="bookFile" type="file" accept=".html,text/html" required>
-      </div>
-      <div class="form-group full">
-        <label class="check-row">
-          <input type="checkbox" id="bookFree" checked>
-          Buku gratis
-        </label>
-        <label class="check-row">
-          <input type="checkbox" id="bookPublish">
-          Terbitkan langsung setelah disimpan
-        </label>
-      </div>
-      <div class="admin-actions full">
-        <button class="btn btn-primary" id="saveBookBtn" type="submit">Simpan Buku</button>
-        <button class="btn" type="button" id="refreshBtn">Muat Ulang Koleksi</button>
-      </div>
-    </form>
-    <p class="notice">Keamanan: unggahan hanya tersedia untuk akun yang terdaftar sebagai admin di database Supabase.</p>
-  </section>
-</main>
+.cover[data-cat="Keuangan"] {
+  background: radial-gradient(ellipse at 50% 70%, #6555c7, transparent 35%),
+    linear-gradient(145deg, #302b68, #0c1025);
+}
 
-<footer>
-  <div class="container">
-    <strong>GALLERY NEXT BETTER</strong><br>
-    Digital Reading Space · © <span id="year"></span>
-  </div>
-</footer>
+.cover[data-cat="Filsafat"] {
+  background: radial-gradient(ellipse at 50% 75%, #7772bd, transparent 35%),
+    linear-gradient(145deg, #34345e, #101225);
+}
 
-<!-- LOGIN / REGISTER -->
-<div class="modal" id="authModal">
-  <div class="modal-box">
-    <button class="modal-close" data-close="authModal" aria-label="Tutup">×</button>
-    <h2 id="authTitle">Masuk ke akun</h2>
-    <p id="authDescription">Masuk untuk menikmati koleksi buku digital.</p>
-    <form class="modal-form" id="authForm">
-      <input class="field" id="authEmail" type="email" required placeholder="Alamat email">
-      <input class="field" id="authPassword" type="password" required minlength="6" placeholder="Password (minimal 6 karakter)">
-      <button class="btn btn-primary" id="authSubmit" type="submit">Masuk</button>
-    </form>
-    <p class="notice" style="margin-top:15px">
-      Belum punya akun?
-      <a href="#" id="toggleAuth" style="color:#bda5ff">Daftar sekarang</a>
-    </p>
-    <div style="border-top:1px solid var(--line);margin:18px 0"></div>
-    <button class="btn" style="width:100%" id="githubLogin">Masuk Admin dengan GitHub</button>
-    <p class="notice">Login GitHub hanya memberikan akses admin jika akun tersebut sudah terdaftar di daftar admin Supabase.</p>
-  </div>
-</div>
+.free {
+  background: #123f42;
+  color: #7df2d3;
+}
 
-<!-- READER -->
-<div class="modal" id="readerModal">
-  <div class="reader-shell">
-    <div class="reader-top">
-      <strong id="readerTitle">Membaca buku</strong>
-      <button id="closeReader" aria-label="Tutup pembaca">×</button>
-    </div>
-    <iframe id="readerFrame" title="Pembaca buku digital" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
-  </div>
-</div>
+.premium {
+  background: #393078;
+  color: #d9caff;
+}
 
-<div id="toast" role="status"></div>
+.book-info button {
+  background: linear-gradient(135deg, #9675ff, #5146c9);
+  color: white;
+  border-color: #a78bfa;
+}
 
-<script>
-  // KONFIGURASI SUPABASE
-  const SUPABASE_URL = "https://cygkduinwiygqmsesyye.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_g5nAOMxRI3wugOGHHww4MQ_O0GiEl1x";
+.book-info button.premium-button {
+  background: linear-gradient(135deg, #202b5b, #30245f);
+  color: #ded5ff;
+  border-color: #7965d8;
+}
 
-  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+.empty {
+  border-color: #454080;
+}
 
-  let currentUser = null;
-  let isAdmin = false;
-  let allBooks = [];
-  let activeCategory = "Semua";
-  let authMode = "login";
+footer {
+  border-top-color: #30365e;
+  background: rgba(7, 10, 29, .7);
+}
 
-  const $ = (id) => document.getElementById(id);
+/* Tampilan pembaca */
+.reader {
+  background: #0c1024;
+  color: #f3f2ff;
+}
 
-  function toast(message) {
-    const el = $("toast");
-    el.textContent = message;
-    el.classList.add("show");
-    clearTimeout(toast.timer);
-    toast.timer = setTimeout(() => el.classList.remove("show"), 3500);
+.reader-bar {
+  background: #171d3d;
+  border-bottom-color: #343b69;
+}
+
+.reader-bar button {
+  background: #393078;
+  color: #f3f2ff;
+}
+
+.reader-content h1,
+.reader-content h2 {
+  color: #bba9ff;
+}
+
+/* Tampilan HP */
+@media(max-width:700px) {
+  .hero {
+    background:
+      linear-gradient(90deg, rgba(9, 12, 31, .96), rgba(25, 20, 65, .78)),
+      radial-gradient(ellipse at 90% 70%, #6651d9, transparent 38%),
+      linear-gradient(135deg, #29245e, #080b1a);
   }
-
-  function escapeHTML(value = "") {
-    return String(value).replace(/[&<>"']/g, char => ({
-      "&": "&amp;", "<": "&lt;", ">": "&gt;",
-      '"': "&quot;", "'": "&#039;"
-    })[char]);
-  }
-
-  function openModal(id) {
-    $(id).classList.add("show");
-  }
-
-  function closeModal(id) {
-    $(id).classList.remove("show");
-  }
-
-  document.querySelectorAll("[data-close]").forEach(button => {
-    button.addEventListener("click", () => closeModal(button.dataset.close));
-  });
-
-  $("year").textContent = new Date().getFullYear();
-
-  function updateAccountButton() {
-    $("accountBtn").textContent = currentUser
-      ? "Akun: " + (currentUser.email || "Pengguna")
-      : "Masuk";
-    $("adminBtn").textContent = isAdmin ? "Dashboard Admin" : "Admin";
-    $("adminPanel").classList.toggle("show", isAdmin);
-  }
-
-  async function checkAdmin() {
-    isAdmin = false;
-    if (currentUser) {
-      const { data, error } = await db
-        .from("admin_users")
-        .select("user_id")
-        .eq("user_id", currentUser.id)
-        .maybeSingle();
-
-      if (!error && data) isAdmin = true;
-    }
-    updateAccountButton();
-  }
-
-  async function loadBooks() {
-    $("bookGrid").innerHTML = '<div class="loading">Memuat koleksi buku...</div>';
-
-    const { data, error } = await db
-      .from("books")
-      .select("*")
-      .eq("status", "published")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      console.error(error);
-      $("bookGrid").innerHTML =
-        '<div class="empty">Koleksi belum dapat dimuat. Periksa koneksi dan pengaturan Supabase.</div>';
-      return;
-    }
-
-    allBooks = data || [];
-    renderCategories();
-    renderBooks();
-  }
-
-  function renderCategories() {
-    const names = ["Semua", ...new Set(allBooks.map(book => book.category).filter(Boolean))];
-    $("categories").innerHTML = names.map(name => `
-      <button class="category ${activeCategory === name ? "active" : ""}"
-        data-category="${escapeHTML(name)}">${escapeHTM
+}
