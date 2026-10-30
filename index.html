@@ -3,217 +3,618 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f7f9fc">
-  <meta name="description" content="GALLERY NEXT BETTER - Perpustakaan digital untuk menemukan buku dan mengembangkan diri.">
-  <title>GALLERY NEXT BETTER | Digital Library</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d20">
+  <title>GALLERY NEXT BETTER</title>
+  <meta name="description" content="Temukan dan baca koleksi buku digital di GALLERY NEXT BETTER.">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #080d20;
+      --panel: rgba(19, 28, 57, .76);
+      --panel2: #111b38;
+      --text: #f4f6ff;
+      --muted: #9ba8c8;
+      --purple: #9b72ff;
+      --blue: #4c9dff;
+      --line: rgba(151, 169, 255, .16);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--text);
+      background:
+        radial-gradient(ellipse at 15% 5%, rgba(93, 57, 190, .24), transparent 34%),
+        radial-gradient(ellipse at 90% 25%, rgba(25, 112, 219, .17), transparent 32%),
+        var(--bg);
+      font-family: "DM Sans", sans-serif;
+      min-height: 100vh;
+    }
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    .container { width: min(1160px, 92%); margin: auto; }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(8, 13, 32, .82);
+      backdrop-filter: blur(18px);
+    }
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: white;
+      text-decoration: none;
+      font-family: "Space Grotesk", sans-serif;
+      font-weight: 700;
+      letter-spacing: .5px;
+    }
+    .brand-mark {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 13px;
+      background: linear-gradient(135deg, var(--purple), var(--blue));
+      box-shadow: 0 0 24px rgba(126, 103, 255, .35);
+      font-size: 20px;
+    }
+    .brand small {
+      display: block;
+      color: #aab7db;
+      font: 600 9px "DM Sans", sans-serif;
+      letter-spacing: 2.4px;
+      margin-top: 3px;
+    }
+    .nav-actions { display: flex; gap: 9px; align-items: center; }
+
+    .btn {
+      border: 1px solid var(--line);
+      color: white;
+      background: rgba(255,255,255,.06);
+      border-radius: 12px;
+      padding: 11px 16px;
+      font-weight: 700;
+      transition: .2s;
+    }
+    .btn:hover { transform: translateY(-2px); border-color: var(--purple); }
+    .btn-primary {
+      border: 0;
+      background: linear-gradient(110deg, #8057ed, #398fe9);
+      box-shadow: 0 8px 25px rgba(90, 93, 230, .25);
+    }
+    .btn:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 78px 0 65px;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      width: 360px;
+      height: 360px;
+      right: -100px;
+      top: 5px;
+      border-radius: 50%;
+      background: rgba(105, 74, 255, .15);
+      filter: blur(75px);
+      pointer-events: none;
+    }
+    .hero-content { max-width: 730px; position: relative; z-index: 1; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #c5b4ff;
+      background: rgba(139, 103, 255, .12);
+      border: 1px solid rgba(166, 137, 255, .24);
+      border-radius: 30px;
+      padding: 8px 13px;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    h1 {
+      font: 700 clamp(38px, 7vw, 67px)/1.08 "Space Grotesk", sans-serif;
+      letter-spacing: -2.5px;
+      margin: 22px 0 17px;
+    }
+    h1 span {
+      background: linear-gradient(100deg, #c6a9ff, #65baff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .hero p { color: var(--muted); line-height: 1.8; max-width: 590px; }
+    .hero-buttons { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 27px; }
+
+    .section { padding: 27px 0 45px; }
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 22px;
+    }
+    .section-heading h2 {
+      font: 700 27px "Space Grotesk", sans-serif;
+      margin: 0 0 6px;
+    }
+    .section-heading p { margin: 0; color: var(--muted); font-size: 13px; }
+    .toolbar { display: flex; gap: 10px; margin-bottom: 19px; }
+    .field {
+      width: 100%;
+      color: white;
+      background: rgba(18, 27, 55, .9);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      outline: none;
+      padding: 13px 14px;
+    }
+    .field:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(155,114,255,.12); }
+    .field::placeholder { color: #7886a8; }
+    select.field { min-width: 155px; }
+    select option { background: #111b38; }
+
+    .categories { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 23px; }
+    .category {
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      color: #b8c3e0;
+      background: rgba(255,255,255,.035);
+      padding: 8px 15px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .category.active {
+      color: white;
+      border-color: transparent;
+      background: linear-gradient(100deg, #8057ed, #398fe9);
+    }
+
+    .book-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 19px;
+    }
+    .book-card {
+      min-width: 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 17px;
+      background: linear-gradient(150deg, rgba(25, 36, 72, .94), rgba(13, 21, 44, .96));
+      transition: .25s;
+    }
+    .book-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(157, 126, 255, .55);
+      box-shadow: 0 14px 35px rgba(0,0,0,.22);
+    }
+    .cover {
+      height: 205px;
+      background: linear-gradient(135deg, #34266a, #164d79);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+    }
+    .cover img { width: 100%; height: 100%; object-fit: cover; }
+    .cover-placeholder { font-size: 42px; opacity: .8; }
+    .book-info { padding: 15px; }
+    .book-tag {
+      display: inline-block;
+      color: #c9b9ff;
+      background: rgba(147, 111, 255, .13);
+      border-radius: 20px;
+      padding: 5px 9px;
+      font-size: 10px;
+      font-weight: 800;
+      margin-bottom: 9px;
+    }
+    .book-info h3 {
+      font: 700 16px "Space Grotesk", sans-serif;
+      margin: 0 0 7px;
+      overflow-wrap: anywhere;
+    }
+    .book-info p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+      min-height: 39px;
+      margin: 0 0 12px;
+    }
+    .book-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .price { font-size: 12px; font-weight: 800; color: #9dc8ff; }
+    .read-btn { padding: 9px 12px; font-size: 11px; }
+
+    .empty, .loading {
+      color: var(--muted);
+      text-align: center;
+      padding: 45px 15px;
+      border: 1px dashed var(--line);
+      border-radius: 16px;
+      grid-column: 1 / -1;
+    }
+    .admin-panel {
+      display: none;
+      margin: 25px auto 45px;
+      padding: 23px;
+      border: 1px solid rgba(155,114,255,.35);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: 0 15px 50px rgba(0,0,0,.16);
+    }
+    .admin-panel.show { display: block; }
+    .admin-panel h2 { font: 700 23px "Space Grotesk"; margin: 0 0 7px; }
+    .admin-panel > p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .admin-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 13px;
+      margin-top: 18px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+    .form-group label { color: #c2cce5; font-size: 12px; font-weight: 700; }
+    .full { grid-column: 1 / -1; }
+    textarea.field { min-height: 90px; resize: vertical; }
+    input[type="file"].field { font-size: 12px; }
+    .check-row { display: flex; align-items: center; gap: 9px; color: #c2cce5; font-size: 13px; }
+    .admin-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 27px 0;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      background: rgba(2,5,16,.82);
+      backdrop-filter: blur(9px);
+      padding: 18px;
+      overflow-y: auto;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal.show { display: flex; }
+    .modal-box {
+      width: min(470px, 100%);
+      padding: 25px;
+      border: 1px solid var(--line);
+      border-radius: 19px;
+      background: #111a35;
+      box-shadow: 0 25px 80px rgba(0,0,0,.45);
+    }
+    .modal-box h2 { font: 700 23px "Space Grotesk"; margin: 0 0 8px; }
+    .modal-box > p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .modal-form { display: grid; gap: 12px; margin-top: 18px; }
+    .modal-close { float: right; border: 0; color: #aeb8d3; background: none; font-size: 23px; }
+    .notice { color: #aebbe0; font-size: 12px; line-height: 1.6; }
+    #readerModal { padding: 0; }
+    .reader-shell {
+      width: 100%;
+      height: 100%;
+      min-height: 100vh;
+      background: white;
+      display: flex;
+      flex-direction: column;
+    }
+    .reader-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 16px;
+      color: white;
+      background: #101a35;
+    }
+    .reader-top button { color: white; border: 0; background: transparent; font-size: 24px; }
+    #readerFrame { width: 100%; flex: 1; min-height: 85vh; border: 0; background: white; }
+
+    #toast {
+      position: fixed;
+      z-index: 100;
+      bottom: 22px;
+      left: 50%;
+      transform: translate(-50%, 20px);
+      opacity: 0;
+      pointer-events: none;
+      max-width: 90%;
+      padding: 12px 17px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      color: white;
+      background: #202d50;
+      box-shadow: 0 10px 35px rgba(0,0,0,.3);
+      font-size: 13px;
+      transition: .25s;
+    }
+    #toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    @media (max-width: 900px) {
+      .book-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 650px) {
+      .nav { min-height: 68px; }
+      .brand { font-size: 13px; }
+      .brand-mark { width: 35px; height: 35px; }
+      .nav-actions .btn { padding: 9px 10px; font-size: 11px; }
+      .hero { padding: 58px 0 45px; }
+      .book-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      .cover { height: 165px; }
+      .book-info { padding: 12px; }
+      .book-info h3 { font-size: 14px; }
+      .book-info p { font-size: 11px; }
+      .toolbar { flex-direction: column; }
+      .admin-form { grid-template-columns: 1fr; }
+      .full { grid-column: auto; }
+      .section-heading h2 { font-size: 23px; }
+    }
+    @media (max-width: 360px) {
+      .book-grid { grid-template-columns: 1fr 1fr; }
+      .cover { height: 140px; }
+      .brand small { letter-spacing: 1.5px; }
+    }
+  </style>
 </head>
+
 <body>
-
-  <header class="header">
-    <div class="nav container">
-      <a href="#home" class="brand">
-        <span class="brand-icon">▤</span>
-        <span>
-          GALLERY
-          <small>NEXT BETTER</small>
-        </span>
-      </a>
-
-      <nav class="nav-links">
-        <a href="#home">Beranda</a>
-        <a href="#kategori">Kategori</a>
-        <a href="#koleksi">Koleksi Buku</a>
-        <a href="#tentang">Tentang</a>
-      </nav>
-
-      <div class="nav-actions">
-        <button class="btn btn-outline" id="loginBtn">Masuk</button>
-        <button class="btn btn-primary" id="registerBtn">Daftar</button>
-        <button class="menu-toggle" id="menuBtn" aria-label="Buka menu">☰</button>
-      </div>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#">
+      <span class="brand-mark">✦</span>
+      <span>GALLERY NEXT BETTER<small>DIGITAL BOOK COLLECTION</small></span>
+    </a>
+    <div class="nav-actions">
+      <button class="btn" id="accountBtn">Masuk</button>
+      <button class="btn btn-primary" id="adminBtn">Admin</button>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main id="home">
-    <section class="hero container">
-      <div class="hero-content">
-        <span class="eyebrow">DIGITAL LIBRARY</span>
-        <h1>Temukan Buku,<br><span>Kembangkan Dirimu.</span></h1>
-        <p>
-          Jelajahi koleksi e-book pilihan untuk menambah wawasan,
-          membangun pola pikir, dan menjadi versi terbaik dirimu.
-        </p>
-
-        <div class="hero-actions">
-          <a href="#koleksi" class="btn btn-primary">Jelajahi Buku</a>
-          <a href="#tentang" class="btn btn-outline">Tentang Kami</a>
-        </div>
-
-        <div class="hero-note">
-          <span>✓</span> Belajar kapan saja dan di mana saja
-        </div>
-      </div>
-
-      <div class="hero-visual" aria-label="Ilustrasi perpustakaan digital">
-        <div class="visual-circle"></div>
-        <div class="visual-book book-one">READ<br>GROW</div>
-        <div class="visual-book book-two">NEXT<br>BETTER</div>
-        <div class="visual-book book-three">YOUR<br>FUTURE</div>
-        <div class="visual-caption">READ · LEARN · GROW</div>
-      </div>
-    </section>
-
-    <section class="features container">
-      <div class="feature">
-        <span>📚</span>
-        <div>
-          <strong>Koleksi Digital</strong>
-          <small>Beragam bacaan pilihan</small>
-        </div>
-      </div>
-      <div class="feature">
-        <span>🔎</span>
-        <div>
-          <strong>Mudah Ditemukan</strong>
-          <small>Pencarian buku praktis</small>
-        </div>
-      </div>
-      <div class="feature">
-        <span>🔐</span>
-        <div>
-          <strong>Akses Terlindungi</strong>
-          <small>Untuk koleksi premium</small>
-        </div>
-      </div>
-    </section>
-
-    <section class="library-section container" id="kategori">
-      <div class="section-heading">
-        <div>
-          <span class="eyebrow">JELAJAHI</span>
-          <h2>Kategori Buku</h2>
-          <p>Pilih kategori sesuai minat bacamu.</p>
-        </div>
-      </div>
-
-      <div class="category-list" id="filters">
-        <button class="category active" data-category="Semua">Semua</button>
-        <button class="category" data-category="Pengembangan Diri">Pengembangan Diri</button>
-        <button class="category" data-category="Psikologi">Psikologi</button>
-        <button class="category" data-category="Bisnis">Bisnis</button>
-        <button class="category" data-category="Keuangan">Keuangan</button>
-        <button class="category" data-category="Filsafat">Filsafat</button>
-        <button class="category" data-category="Pendidikan">Pendidikan</button>
-      </div>
-    </section>
-
-    <section class="library-section container" id="koleksi">
-      <div class="section-heading collection-heading">
-        <div>
-          <span class="eyebrow">GALERI BACAAN</span>
-          <h2>Jelajahi Koleksi Buku</h2>
-          <p>Temukan bacaan yang sesuai dengan perjalananmu.</p>
-        </div>
-        <span class="book-count" id="count">0 buku</span>
-      </div>
-
-      <div class="search-box">
-        <span>⌕</span>
-        <input
-          type="search"
-          id="search"
-          placeholder="Cari judul, penulis, atau kategori buku..."
-          aria-label="Cari buku"
-        >
-      </div>
-
-      <div class="catalog-grid" id="catalog">
-        <div class="loading">Memuat koleksi buku...</div>
-      </div>
-    </section>
-
-    <section class="join-section container">
-      <div>
-        <span class="eyebrow">MULAI PERJALANANMU</span>
-        <h2>Satu Buku Bisa Membuka Banyak Peluang.</h2>
-        <p>Daftar dan temukan bacaan yang mendukung perkembangan dirimu.</p>
-      </div>
-      <button class="btn btn-light" id="joinBtn">Buat Akun</button>
-    </section>
-  </main>
-
-  <footer id="tentang">
-    <div class="footer-content container">
-      <div class="footer-brand">
-        <div class="brand">
-          <span class="brand-icon">▤</span>
-          <span>GALLERY<small>NEXT BETTER</small></span>
-        </div>
-        <p>Buku hari ini, versi terbaikmu esok.</p>
-      </div>
-
-      <div class="footer-links">
-        <a href="#home">Beranda</a>
-        <a href="#kategori">Kategori</a>
-        <a href="#koleksi">Koleksi</a>
-      </div>
-    </div>
-    <div class="copyright">
-      © <span id="year"></span> GALLERY NEXT BETTER. Hak cipta dilindungi.
-    </div>
-  </footer>
-
-  <section class="modal" id="authModal" aria-hidden="true">
-    <div class="modal-card">
-      <button class="modal-close" id="closeAuth" aria-label="Tutup">×</button>
-      <span class="eyebrow">GALLERY NEXT BETTER</span>
-      <h2 id="authTitle">Masuk ke Akun</h2>
-      <p id="authDescription">Masuk untuk menikmati perpustakaan digital.</p>
-
-      <form id="authForm">
-        <label for="authName" id="nameLabel" hidden>Nama lengkap</label>
-        <input id="authName" type="text" placeholder="Nama lengkap" hidden>
-
-        <label for="authEmail">Email</label>
-        <input id="authEmail" type="email" placeholder="Alamat email" required>
-
-        <label for="authPassword">Kata sandi</label>
-        <input id="authPassword" type="password" placeholder="Kata sandi" required>
-
-        <button class="btn btn-primary auth-submit" id="authSubmit" type="submit">
-          Masuk
-        </button>
-      </form>
-
-      <div class="modal-divider">atau</div>
-
-      <button class="btn btn-outline auth-submit" id="githubLogin" type="button">
-        Masuk Admin dengan GitHub
-      </button>
-
-      <p class="auth-switch" id="authSwitch">
-        Belum punya akun? <button type="button" id="switchAuth">Daftar</button>
+<main>
+  <section class="hero">
+    <div class="container hero-content">
+      <span class="eyebrow">✦ YOUR DIGITAL READING SPACE</span>
+      <h1>Explore Ideas.<br><span>Read Beyond Limits.</span></h1>
+      <p>
+        Temukan wawasan, cerita, dan inspirasi dalam satu ruang koleksi
+        buku digital. Pilih buku favoritmu dan mulai membaca.
       </p>
-      <p class="auth-message" id="authMessage" role="status"></p>
-    </div>
-  </section>
-
-  <section class="reader" id="reader" aria-hidden="true">
-    <div class="reader-bar">
-      <button class="btn btn-outline" id="closeReader">← Kembali</button>
-      <div class="reader-tools">
-        <button id="smaller" aria-label="Perkecil tulisan">A−</button>
-        <button id="larger" aria-label="Perbesar tulisan">A+</button>
-        <button id="changeTheme">Tema</button>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="document.getElementById('koleksi').scrollIntoView({behavior:'smooth'})">
+          Jelajahi Koleksi ↗
+        </button>
+        <button class="btn" id="heroAccountBtn">Buat Akun</button>
       </div>
     </div>
-    <article class="reader-content" id="readerContent"></article>
   </section>
 
-  <script src="config.js"></script>
-  <script src="app.js"></script>
-</body>
-                                      </html>
-                                      
+  <section class="section container" id="koleksi">
+    <div class="section-heading">
+      <div>
+        <h2>Explore Collection</h2>
+        <p>Koleksi buku digital GALLERY NEXT BETTER</p>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <input class="field" id="searchInput" type="search" placeholder="Cari judul atau deskripsi buku...">
+      <select class="field" id="sortSelect" aria-label="Urutkan buku">
+        <option value="new">Terbaru</option>
+        <option value="az">Judul A–Z</option>
+        <option value="price">Harga terendah</option>
+      </select>
+    </div>
+
+    <div class="categories" id="categories">
+      <button class="category active" data-category="Semua">Semua</button>
+    </div>
+
+    <div class="book-grid" id="bookGrid">
+      <div class="loading">Memuat koleksi buku...</div>
+    </div>
+  </section>
+
+  <section class="container admin-panel" id="adminPanel">
+    <h2>Admin Dashboard</h2>
+    <p>Tambahkan buku milikmu. Unggah sampul dan naskah dalam format HTML. Buku dapat disimpan sebagai draf atau langsung diterbitkan.</p>
+
+    <form id="bookForm" class="admin-form">
+      <div class="form-group">
+        <label for="bookTitle">Judul buku *</label>
+        <input class="field" id="bookTitle" required maxlength="150" placeholder="Masukkan judul buku">
+      </div>
+      <div class="form-group">
+        <label for="bookCategory">Kategori *</label>
+        <input class="field" id="bookCategory" required maxlength="60" placeholder="Contoh: Pendidikan">
+      </div>
+      <div class="form-group full">
+        <label for="bookDescription">Deskripsi buku</label>
+        <textarea class="field" id="bookDescription" placeholder="Ceritakan isi buku..."></textarea>
+      </div>
+      <div class="form-group">
+        <label for="bookPrice">Harga (Rupiah)</label>
+        <input class="field" id="bookPrice" type="number" min="0" value="0">
+      </div>
+      <div class="form-group">
+        <label for="bookCover">Sampul buku (JPG, PNG, WEBP)</label>
+        <input class="field" id="bookCover" type="file" accept="image/jpeg,image/png,image/webp">
+      </div>
+      <div class="form-group full">
+        <label for="bookFile">Naskah buku (file HTML) *</label>
+        <input class="field" id="bookFile" type="file" accept=".html,text/html" required>
+      </div>
+      <div class="form-group full">
+        <label class="check-row">
+          <input type="checkbox" id="bookFree" checked>
+          Buku gratis
+        </label>
+        <label class="check-row">
+          <input type="checkbox" id="bookPublish">
+          Terbitkan langsung setelah disimpan
+        </label>
+      </div>
+      <div class="admin-actions full">
+        <button class="btn btn-primary" id="saveBookBtn" type="submit">Simpan Buku</button>
+        <button class="btn" type="button" id="refreshBtn">Muat Ulang Koleksi</button>
+      </div>
+    </form>
+    <p class="notice">Keamanan: unggahan hanya tersedia untuk akun yang terdaftar sebagai admin di database Supabase.</p>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <strong>GALLERY NEXT BETTER</strong><br>
+    Digital Reading Space · © <span id="year"></span>
+  </div>
+</footer>
+
+<!-- LOGIN / REGISTER -->
+<div class="modal" id="authModal">
+  <div class="modal-box">
+    <button class="modal-close" data-close="authModal" aria-label="Tutup">×</button>
+    <h2 id="authTitle">Masuk ke akun</h2>
+    <p id="authDescription">Masuk untuk menikmati koleksi buku digital.</p>
+    <form class="modal-form" id="authForm">
+      <input class="field" id="authEmail" type="email" required placeholder="Alamat email">
+      <input class="field" id="authPassword" type="password" required minlength="6" placeholder="Password (minimal 6 karakter)">
+      <button class="btn btn-primary" id="authSubmit" type="submit">Masuk</button>
+    </form>
+    <p class="notice" style="margin-top:15px">
+      Belum punya akun?
+      <a href="#" id="toggleAuth" style="color:#bda5ff">Daftar sekarang</a>
+    </p>
+    <div style="border-top:1px solid var(--line);margin:18px 0"></div>
+    <button class="btn" style="width:100%" id="githubLogin">Masuk Admin dengan GitHub</button>
+    <p class="notice">Login GitHub hanya memberikan akses admin jika akun tersebut sudah terdaftar di daftar admin Supabase.</p>
+  </div>
+</div>
+
+<!-- READER -->
+<div class="modal" id="readerModal">
+  <div class="reader-shell">
+    <div class="reader-top">
+      <strong id="readerTitle">Membaca buku</strong>
+      <button id="closeReader" aria-label="Tutup pembaca">×</button>
+    </div>
+    <iframe id="readerFrame" title="Pembaca buku digital" sandbox="allow-scripts allow-same-origin allow-forms"></iframe>
+  </div>
+</div>
+
+<div id="toast" role="status"></div>
+
+<script>
+  // KONFIGURASI SUPABASE
+  const SUPABASE_URL = "https://cygkduinwiygqmsesyye.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_g5nAOMxRI3wugOGHHww4MQ_O0GiEl1x";
+
+  const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  let currentUser = null;
+  let isAdmin = false;
+  let allBooks = [];
+  let activeCategory = "Semua";
+  let authMode = "login";
+
+  const $ = (id) => document.getElementById(id);
+
+  function toast(message) {
+    const el = $("toast");
+    el.textContent = message;
+    el.classList.add("show");
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(() => el.classList.remove("show"), 3500);
+  }
+
+  function escapeHTML(value = "") {
+    return String(value).replace(/[&<>"']/g, char => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;",
+      '"': "&quot;", "'": "&#039;"
+    })[char]);
+  }
+
+  function openModal(id) {
+    $(id).classList.add("show");
+  }
+
+  function closeModal(id) {
+    $(id).classList.remove("show");
+  }
+
+  document.querySelectorAll("[data-close]").forEach(button => {
+    button.addEventListener("click", () => closeModal(button.dataset.close));
+  });
+
+  $("year").textContent = new Date().getFullYear();
+
+  function updateAccountButton() {
+    $("accountBtn").textContent = currentUser
+      ? "Akun: " + (currentUser.email || "Pengguna")
+      : "Masuk";
+    $("adminBtn").textContent = isAdmin ? "Dashboard Admin" : "Admin";
+    $("adminPanel").classList.toggle("show", isAdmin);
+  }
+
+  async function checkAdmin() {
+    isAdmin = false;
+    if (currentUser) {
+      const { data, error } = await db
+        .from("admin_users")
+        .select("user_id")
+        .eq("user_id", currentUser.id)
+        .maybeSingle();
+
+      if (!error && data) isAdmin = true;
+    }
+    updateAccountButton();
+  }
+
+  async function loadBooks() {
+    $("bookGrid").innerHTML = '<div class="loading">Memuat koleksi buku...</div>';
+
+    const { data, error } = await db
+      .from("books")
+      .select("*")
+      .eq("status", "published")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error(error);
+      $("bookGrid").innerHTML =
+        '<div class="empty">Koleksi belum dapat dimuat. Periksa koneksi dan pengaturan Supabase.</div>';
+      return;
+    }
+
+    allBooks = data || [];
+    renderCategories();
+    renderBooks();
+  }
+
+  function renderCategories() {
+    const names = ["Semua", ...new Set(allBooks.map(book => book.category).filter(Boolean))];
+    $("categories").innerHTML = names.map(name => `
+      <button class="category ${activeCategory === name ? "active" : ""}"
+        data-category="${escapeHTML(name)}">${escapeHTM
