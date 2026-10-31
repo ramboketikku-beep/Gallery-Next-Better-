@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -336,24 +337,8 @@ h1{
   position:relative
 }
 
-.cover h3{
-  font-size:clamp(13px,1.5vw,19px);
-  font-weight:normal;
-  margin:12px 0 6px;
-  position:relative;
-  text-transform:uppercase;
-  overflow-wrap:anywhere
-}
-
-.cover p{
-  font-size:9px;
-  line-height:1.4;
-  margin:0;
-  position:relative;
-  color:inherit;
-  opacity:.85;
-  overflow-wrap:anywhere
-}
+/* Judul dan subjudul tidak lagi ditampilkan di tengah sampul */
+.cover h3,.cover p{display:none}
 
 .cover .cover-bottom{
   font-size:7px;
@@ -625,8 +610,6 @@ footer{
   .cover{padding:8px 5px;aspect-ratio:3/4}
   .cover:before{inset:4px}
   .cover .cover-brand{font-size:5px;letter-spacing:.5px}
-  .cover h3{font-size:clamp(8px,2.5vw,12px);margin:7px 0 4px;overflow-wrap:anywhere}
-  .cover p{font-size:7px;line-height:1.2}
   .cover .cover-bottom{font-size:5px;letter-spacing:.5px}
   .book-info{padding:6px 5px}
   .meta{font-size:8px;display:block}
@@ -647,7 +630,6 @@ footer{
   .grid{gap:4px}
   .book-info{padding:5px 4px}
   .book-info p{font-size:8px;min-height:60px}
-  .cover h3{font-size:8px}
   .book-info h3{font-size:9px}
   .brand{font-size:11px}
   .categories{grid-template-columns:repeat(7,minmax(64px,1fr))}
@@ -692,7 +674,7 @@ footer{
   </div>
  </section>
 
- <div class="categories" id="filters" aria-label="Kategori"></div>
+ <div class="categories" id="kategori" aria-label="Kategori"></div>
 
  <div class="section-title" id="koleksi">
   <div>
@@ -937,17 +919,12 @@ function renderBooks(){
   brand.className="cover-brand";
   brand.textContent="GALLERY · NEXT BETTER";
 
-  const title=document.createElement("h3");
-  title.textContent=book.title;
-
-  const subtitle=document.createElement("p");
-  subtitle.textContent=book.subtitle||book.author||"";
-
   const bottom=document.createElement("div");
   bottom.className="cover-bottom";
   bottom.textContent="NEXT BETTER";
 
-  cover.append(brand,title,subtitle,bottom);
+  /* Sampul hanya menampilkan identitas merek */
+  cover.append(brand,bottom);
 
   const info=document.createElement("div");
   info.className="book-info";
@@ -1178,7 +1155,6 @@ document.getElementById("logoutBtn").addEventListener("click",async()=>{
  document.getElementById("adminModal").classList.remove("open");
 });
 
-/* Menangani perubahan status login tanpa memanggil getSession berulang di callback */
 supabaseClient.auth.onAuthStateChange((event,session)=>{
  currentUser=session?.user||null;
 
