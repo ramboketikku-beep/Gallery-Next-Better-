@@ -17,8 +17,6 @@
   --gold:#C99A3B;
   --gold2:#F3CC75;
   --line:#745522;
-  --green:#A6C9B2;
-  --danger:#E39A96;
 }
 
 *{box-sizing:border-box}
@@ -32,7 +30,7 @@ body{
     var(--bg);
   color:var(--text);
   font-family:Arial,Helvetica,sans-serif;
-  line-height:1.55
+  line-height:1.55;
 }
 
 button,input,select,textarea{font:inherit}
@@ -44,7 +42,7 @@ header{
   z-index:5;
   background:rgba(12,10,7,.97);
   backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--gold)
+  border-bottom:1px solid var(--gold);
 }
 
 .nav{
@@ -54,7 +52,7 @@ header{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  gap:15px
+  gap:15px;
 }
 
 .brand{
@@ -64,7 +62,7 @@ header{
   font-family:Georgia,serif;
   letter-spacing:2px;
   font-size:16px;
-  line-height:1.1
+  line-height:1.1;
 }
 
 .brand-icon{color:var(--gold2);font-size:30px}
@@ -73,7 +71,7 @@ header{
   font-size:11px;
   letter-spacing:3px;
   color:var(--gold2);
-  margin-top:5px
+  margin-top:5px;
 }
 
 .nav-actions{display:flex;gap:8px}
@@ -85,7 +83,7 @@ header{
   font-size:20px;
   width:38px;
   height:38px;
-  border-radius:50%
+  border-radius:50%;
 }
 
 .icon-btn:hover{border-color:var(--gold);color:var(--gold2)}
@@ -94,7 +92,7 @@ header{
 .nav-links a{
   color:var(--muted);
   text-decoration:none;
-  font-size:13px
+  font-size:13px;
 }
 .nav-links a:hover{color:var(--gold2)}
 
@@ -111,7 +109,7 @@ main{max-width:1200px;margin:auto;padding:0 22px}
   background:
     linear-gradient(90deg,rgba(12,10,7,.96),rgba(25,19,11,.78) 55%,rgba(25,19,11,.25)),
     url("https://images.unsplash.com/photo-1506784365847-bbad939e9335?auto=format&fit=crop&w=1400&q=85") center/cover;
-  isolation:isolate
+  isolation:isolate;
 }
 
 .hero:after{
@@ -124,33 +122,33 @@ main{max-width:1200px;margin:auto;padding:0 22px}
   height:100%;
   opacity:.35;
   background:repeating-linear-gradient(90deg,transparent 0 34px,rgba(243,204,117,.12) 35px 38px);
-  border-left:1px solid rgba(243,204,117,.25)
+  border-left:1px solid rgba(243,204,117,.25);
 }
 
 .eyebrow{
   font-size:11px;
   letter-spacing:3px;
   color:var(--gold2);
-  text-transform:uppercase
+  text-transform:uppercase;
 }
 
 h1,h2,h3{
   font-family:Georgia,'Times New Roman',serif;
   font-weight:normal;
-  line-height:1.2
+  line-height:1.2;
 }
 
 h1{
   font-size:clamp(28px,4vw,44px);
   max-width:560px;
-  margin:10px 0
+  margin:10px 0;
 }
 
 .hero p{
   color:#F0E5D3;
   max-width:530px;
   font-size:14px;
-  margin:0 0 18px
+  margin:0 0 18px;
 }
 
 .search{display:flex;gap:8px;max-width:540px}
@@ -163,7 +161,7 @@ h1{
   border:1px solid var(--gold);
   border-radius:10px;
   padding:12px 14px;
-  outline:none
+  outline:none;
 }
 
 .search button,.gold-btn{
@@ -172,7 +170,7 @@ h1{
   padding:11px 16px;
   background:linear-gradient(135deg,#FFE4A0,#C18A25);
   color:#211607;
-  font-weight:bold
+  font-weight:bold;
 }
 
 /* KATEGORI */
@@ -183,7 +181,7 @@ h1{
   gap:9px;
   margin:18px 0 28px;
   padding:12px 0;
-  border-bottom:1px solid var(--line)
+  border-bottom:1px solid var(--line);
 }
 
 .filter{
@@ -202,72 +200,60 @@ h1{
   text-align:center;
   overflow:hidden;
   overflow-wrap:anywhere;
-  word-break:normal;
   white-space:normal;
   line-height:1.3;
-  transition:all .2s ease
+  transition:all .2s ease;
 }
 
 .filter .cat-icon{
   display:block;
   font-size:25px;
   line-height:1;
-  margin:0;
-  color:#FFD477
+  color:#FFD477;
 }
 
 .filter span:last-child{
   display:block;
   width:100%;
-  max-width:100%;
   overflow-wrap:anywhere;
-  word-break:normal;
-  white-space:normal;
-  text-align:center
+  text-align:center;
 }
 
 .filter[data-category="Semua"]{
   background:linear-gradient(145deg,#17365E,#0C1C35);
-  border-color:#477DBB
+  border-color:#477DBB;
 }
-
 .filter[data-category="Mindset"]{
   background:linear-gradient(145deg,#59245F,#24102D);
-  border-color:#A45DB0
+  border-color:#A45DB0;
 }
-
 .filter[data-category="Pengembangan Diri"]{
   background:linear-gradient(145deg,#245C36,#10291B);
-  border-color:#5B9B68
+  border-color:#5B9B68;
 }
-
 .filter[data-category="Psikologi"]{
   background:linear-gradient(145deg,#702323,#351010);
-  border-color:#BD5959
+  border-color:#BD5959;
 }
-
 .filter[data-category="Bisnis"]{
   background:linear-gradient(145deg,#A66A12,#593506);
-  border-color:#F2C35C
+  border-color:#F2C35C;
 }
-
 .filter[data-category="Keuangan"]{
   background:linear-gradient(145deg,#145D60,#0B3035);
-  border-color:#4CABA7
+  border-color:#4CABA7;
 }
-
 .filter[data-category="Filsafat"]{
   background:linear-gradient(145deg,#55545C,#292830);
-  border-color:#A7A5B0
+  border-color:#A7A5B0;
 }
 
 .filter.active{
   border:2px solid #FFE09A;
   box-shadow:0 0 15px rgba(218,166,65,.35);
   color:#FFF8E9;
-  transform:translateY(-2px)
+  transform:translateY(-2px);
 }
-
 .filter:hover{filter:brightness(1.2)}
 
 .section-title{
@@ -275,7 +261,7 @@ h1{
   justify-content:space-between;
   align-items:end;
   gap:10px;
-  margin:22px 0 14px
+  margin:22px 0 14px;
 }
 
 .section-title h2{font-size:clamp(23px,3vw,30px);margin:0}
@@ -285,7 +271,7 @@ h1{
 .grid{
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:14px
+  gap:14px;
 }
 
 .book{
@@ -295,14 +281,12 @@ h1{
   border-radius:12px;
   background:linear-gradient(180deg,#292016,#15110C);
   box-shadow:0 7px 22px rgba(0,0,0,.22);
-  transition:transform .2s,border-color .2s
+  transition:transform .2s,border-color .2s;
 }
-
 .book:hover{transform:translateY(-3px);border-color:var(--gold2)}
 
 .cover{
   aspect-ratio:3/4;
-  min-height:0;
   padding:12px 10px;
   display:flex;
   flex-direction:column;
@@ -313,7 +297,7 @@ h1{
   border-bottom:1px solid var(--line);
   background:
     radial-gradient(ellipse at 50% 70%,rgba(243,204,117,.25),transparent 45%),
-    linear-gradient(145deg,#74501F,#17110A 72%)
+    linear-gradient(145deg,#74501F,#17110A 72%);
 }
 
 .cover:before{
@@ -321,10 +305,10 @@ h1{
   position:absolute;
   inset:7px;
   border:1px solid rgba(243,204,117,.5);
-  pointer-events:none
+  pointer-events:none;
 }
 
-.cover[data-cat="Pengembangan Diri"]{background:linear-gradient(145deg,#607D50,#26351F);color:#F4F6F8}
+.cover[data-cat="Pengembangan Diri"]{background:linear-gradient(145deg,#607D50,#26351F)}
 .cover[data-cat="Psikologi"]{background:linear-gradient(145deg,#702D2D,#351010)}
 .cover[data-cat="Bisnis"]{background:linear-gradient(145deg,#A66A12,#593506)}
 .cover[data-cat="Keuangan"]{background:linear-gradient(145deg,#145D60,#0B3035)}
@@ -334,17 +318,14 @@ h1{
   font-size:8px;
   letter-spacing:1.5px;
   color:var(--gold2);
-  position:relative
+  position:relative;
 }
-
-/* Judul dan subjudul tidak lagi ditampilkan di tengah sampul */
-.cover h3,.cover p{display:none}
 
 .cover .cover-bottom{
   font-size:7px;
   letter-spacing:2px;
   color:var(--gold2);
-  position:relative
+  position:relative;
 }
 
 .book-info{padding:12px}
@@ -355,7 +336,7 @@ h1{
   align-items:center;
   gap:5px;
   font-size:10px;
-  color:var(--muted)
+  color:var(--muted);
 }
 
 .badge{
@@ -363,20 +344,23 @@ h1{
   padding:3px 7px;
   font-weight:bold;
   font-size:10px;
-  white-space:nowrap
+  white-space:nowrap;
 }
-
 .free{background:#29483D;color:#B9E1CA}
 .price{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-.book-info h3{font-size:16px;margin:9px 0 6px;overflow-wrap:anywhere}
+.book-info h3{
+  font-size:16px;
+  margin:9px 0 6px;
+  overflow-wrap:anywhere;
+}
 .book-info p{
   color:var(--muted);
   font-size:12px;
   line-height:1.55;
   margin:0;
   min-height:56px;
-  overflow-wrap:anywhere
+  overflow-wrap:anywhere;
 }
 
 .book-info button{
@@ -388,7 +372,7 @@ h1{
   border-radius:7px;
   padding:9px 5px;
   font-size:11px;
-  font-weight:bold
+  font-weight:bold;
 }
 
 .empty{
@@ -398,7 +382,7 @@ h1{
   border:1px dashed var(--gold);
   border-radius:14px;
   text-align:center;
-  background:rgba(30,23,14,.88)
+  background:rgba(30,23,14,.88);
 }
 
 footer{
@@ -408,7 +392,7 @@ footer{
   text-align:center;
   color:var(--muted);
   font-size:11px;
-  background:rgba(12,10,7,.9)
+  background:rgba(12,10,7,.9);
 }
 
 /* PEMBACA E-BOOK */
@@ -420,9 +404,8 @@ footer{
   background:#F5F0E6;
   color:#222;
   overflow:auto;
-  display:none
+  display:none;
 }
-
 .reader.open{display:block}
 
 .reader-bar{
@@ -435,7 +418,7 @@ footer{
   align-items:center;
   gap:8px;
   border-bottom:1px solid #D2C7B5;
-  z-index:2
+  z-index:2;
 }
 
 .reader-bar button{
@@ -444,9 +427,8 @@ footer{
   border:0;
   background:#D4C3A7;
   color:#211B13;
-  font-size:13px
+  font-size:13px;
 }
-
 .reader-tools{display:flex;gap:5px}
 
 .reader-content{
@@ -455,9 +437,8 @@ footer{
   padding:26px 22px 70px;
   font-size:18px;
   line-height:1.9;
-  overflow-wrap:anywhere
+  overflow-wrap:anywhere;
 }
-
 .reader-content h1,.reader-content h2{color:#4A3521}
 .reader-content h1{font-size:32px}
 .reader-content p{margin:0 0 1.3em}
@@ -471,13 +452,12 @@ footer{
   z-index:20;
   background:rgba(5,12,20,.78);
   padding:18px;
-  overflow:auto
+  overflow:auto;
 }
-
 .modal-backdrop.open{
   display:flex;
   align-items:flex-start;
-  justify-content:center
+  justify-content:center;
 }
 
 .modal{
@@ -487,9 +467,8 @@ footer{
   border:1px solid var(--line);
   border-radius:14px;
   padding:22px;
-  box-shadow:0 20px 70px #0008
+  box-shadow:0 20px 70px #0008;
 }
-
 .modal h2{margin:0 0 15px}
 .modal p{color:var(--muted);font-size:13px}
 .modal label{display:block;color:var(--muted);font-size:12px;margin:12px 0 5px}
@@ -501,9 +480,8 @@ footer{
   border:1px solid var(--line);
   background:#100D09;
   color:var(--text);
-  outline:none
+  outline:none;
 }
-
 .modal textarea{min-height:110px;resize:vertical}
 .modal input:focus,.modal textarea:focus,.modal select:focus{border-color:var(--gold)}
 
@@ -515,28 +493,25 @@ footer{
   border:1px solid var(--gold2);
   background:linear-gradient(135deg,#FFE4A0,#C18A25);
   color:#211607;
-  font-weight:bold
+  font-weight:bold;
 }
-
 .action-btn.secondary{
   background:transparent;
   color:var(--text);
-  border-color:var(--line)
+  border-color:var(--line);
 }
-
 .action-btn.danger{
   background:#6B3438;
   color:#FFE4E2;
-  border-color:#9C5558
+  border-color:#9C5558;
 }
 
 .status{
   font-size:12px;
   color:var(--muted);
   margin-top:10px;
-  white-space:pre-wrap
+  white-space:pre-wrap;
 }
-
 .admin-list{display:grid;gap:8px;margin-top:16px}
 
 .admin-row{
@@ -547,9 +522,8 @@ footer{
   padding:10px;
   border:1px solid var(--line);
   border-radius:8px;
-  background:var(--panel2)
+  background:var(--panel2);
 }
-
 .admin-row strong{font-size:13px}
 .admin-row small{display:block;color:var(--muted);font-size:11px}
 .admin-row button{margin:3px}
@@ -573,7 +547,7 @@ footer{
     margin-top:12px;
     padding:23px 17px 19px;
     min-height:0;
-    border-radius:12px
+    border-radius:12px;
   }
 
   .hero:after{width:28%;opacity:.35}
@@ -588,7 +562,7 @@ footer{
     overflow-y:hidden;
     gap:5px;
     margin:12px 0 21px;
-    padding:10px 2px
+    padding:10px 2px;
   }
 
   .filter{
@@ -596,9 +570,8 @@ footer{
     padding:10px 4px;
     font-size:10px;
     line-height:1.3;
-    border-radius:10px
+    border-radius:10px;
   }
-
   .filter .cat-icon{font-size:22px}
   .filter span:last-child{font-size:10px;line-height:1.3}
 
@@ -615,7 +588,7 @@ footer{
   .meta{font-size:8px;display:block}
   .badge{font-size:7px;padding:3px 5px;display:inline-block}
   .price{display:block;margin-top:4px;font-size:8px}
-  .book-info h3{font-size:10px;line-height:1.25;margin:6px 0 4px;overflow-wrap:anywhere}
+  .book-info h3{font-size:10px;line-height:1.25;margin:6px 0 4px}
   .book-info p{font-size:9px;line-height:1.35;min-height:55px}
   .book-info button{font-size:8px;padding:7px 2px;margin-top:7px;line-height:1.2}
   footer{margin-top:26px;padding:20px 12px}
@@ -830,7 +803,11 @@ let currentUser = null;
 let isAdmin = false;
 
 const catalog = document.getElementById("catalog");
-const filters = document.getElementById("filters");
+
+/* PERBAIKAN PENTING:
+   ID HTML adalah kategori, bukan filters. */
+const filters = document.getElementById("kategori");
+
 const search = document.getElementById("search");
 const count = document.getElementById("count");
 
@@ -850,10 +827,13 @@ function escapeHTML(value){
 
 /* RENDER KATEGORI */
 function renderFilters(){
+ if(!filters)return;
+
  filters.innerHTML="";
 
  categories.forEach(([name,icon])=>{
   const button=document.createElement("button");
+  button.type="button";
   button.className="filter"+(name===activeCategory?" active":"");
   button.dataset.category=name;
 
@@ -882,6 +862,7 @@ function renderBooks(){
 
  const found=books.filter(book=>{
   const categoryMatch=activeCategory==="Semua"||book.category===activeCategory;
+
   const text=[
    book.title,
    book.author,
@@ -907,10 +888,11 @@ function renderBooks(){
 
   const cover=document.createElement("div");
   cover.className="cover";
-  cover.dataset.cat=book.category;
+  cover.dataset.cat=book.category||"";
 
   if(book.cover_url){
-   cover.style.backgroundImage=`linear-gradient(#17110A55,#17110A99),url("${book.cover_url}")`;
+   cover.style.backgroundImage=
+    `linear-gradient(#17110A55,#17110A99),url("${book.cover_url}")`;
    cover.style.backgroundSize="cover";
    cover.style.backgroundPosition="center";
   }
@@ -923,7 +905,7 @@ function renderBooks(){
   bottom.className="cover-bottom";
   bottom.textContent="NEXT BETTER";
 
-  /* Sampul hanya menampilkan identitas merek */
+  /* Judul dan subjudul tidak ditampilkan di tengah sampul. */
   cover.append(brand,bottom);
 
   const info=document.createElement("div");
@@ -943,12 +925,13 @@ function renderBooks(){
   meta.append(badge,price);
 
   const heading=document.createElement("h3");
-  heading.textContent=book.title;
+  heading.textContent=book.title||"Tanpa judul";
 
   const description=document.createElement("p");
   description.textContent=book.description||"";
 
   const button=document.createElement("button");
+  button.type="button";
   button.textContent="▣ Baca Sekarang";
   button.addEventListener("click",()=>openReader(book));
 
@@ -1213,13 +1196,22 @@ async function loadCategories(){
   .filter(row=>row.name)
   .sort((a,b)=>(Number(a.sort_order)||999)-(Number(b.sort_order)||999));
 
- categories=[
-  ["Semua","▦"],
-  ...rows.map(row=>[
-   row.name,
-   row.icon||iconMap[row.name]||"📚"
-  ])
- ];
+ /* Jika tabel Supabase kosong, tampilkan kategori bawaan. */
+ if(rows.length){
+  categories=[
+   ["Semua","▦"],
+   ...rows.map(row=>[
+    row.name,
+    row.icon||iconMap[row.name]||"📚"
+   ])
+  ];
+ }else{
+  categories=DEFAULT_CATEGORIES.map(x=>[...x]);
+ }
+
+ if(!categories.some(category=>category[0]===activeCategory)){
+  activeCategory="Semua";
+ }
 
  renderFilters();
 }
@@ -1397,7 +1389,6 @@ document.getElementById("saveBookBtn").addEventListener("click",async()=>{
 
  const saveButton=document.getElementById("saveBookBtn");
  saveButton.disabled=true;
-
  showStatus("bookStatusMessage","Menyimpan buku...");
 
  try{
@@ -1539,7 +1530,15 @@ async function loadAdminCategories(){
   list.appendChild(row);
  });
 
- if(!rows.length)list.textContent="Belum ada kategori.";
+ if(!rows.length){
+  list.textContent="Belum ada kategori.";
+  DEFAULT_CATEGORIES.filter(item=>item[0]!=="Semua").forEach(item=>{
+   const option=document.createElement("option");
+   option.value=item[0];
+   option.textContent=item[0];
+   select.appendChild(option);
+  });
+ }
 }
 
 document.getElementById("addCategoryBtn").addEventListener("click",async()=>{
@@ -1626,9 +1625,17 @@ async function initializeWebsite(){
 
  catalog.innerHTML='<div class="empty">Menghubungkan ke perpustakaan...</div>';
 
- await refreshSession();
- await loadCategories();
- await loadBooks();
+ try{
+  await refreshSession();
+  await loadCategories();
+  await loadBooks();
+ }catch(error){
+  console.error("Inisialisasi:",error);
+  categories=DEFAULT_CATEGORIES.map(x=>[...x]);
+  renderFilters();
+  catalog.innerHTML='<div class="empty">Terjadi kesalahan saat menghubungkan ke perpustakaan. Silakan muat ulang halaman.</div>';
+  count.textContent="0 buku";
+ }
 }
 
 initializeWebsite();
